@@ -5,3 +5,16 @@ edition = "2021"
 
 [dependencies]
 actix-web = "4"
+
+[dependencies.sqlx]
+version = "0.5.7"
+default-features = false
+features = [
+  "runtime-actix-rustls",
+  "macros",
+  "postgres", 
+  "uuid",
+  "chrono",
+  "migrate",
+  "offline"
+]
