@@ -9,7 +9,7 @@ const prisma = new PrismaClient()
 
 export class UserRepository implements CreateUserRepository, CheckUserRepository {
   async create(user: User): Promise<void> {
-    prisma.user.create({
+    await prisma.user.create({
       data: {
         name: user.name, 
         password: user.password, 

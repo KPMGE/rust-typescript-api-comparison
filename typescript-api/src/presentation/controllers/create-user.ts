@@ -14,8 +14,6 @@ export class CreateUserController {
       password: req.body.password
     }
 
-    console.log('user: ', user)
-
     try {
       await this.service.create(user)
       return res.status(httpStatus.CREATED).send()
