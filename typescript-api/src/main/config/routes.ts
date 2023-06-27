@@ -5,6 +5,7 @@ import {
   makeCreateTodoRepository,
   makeCreateUserController, 
   makeDeleteUserController, 
+  makeListTodoController, 
   makeListUserController, 
   makeUpdateUserController 
 } from '../factories';
@@ -21,5 +22,6 @@ routes.put('/users/:userId', adaptRoute(makeUpdateUserController()))
 routes.delete('/users/:userId', adaptRoute(makeDeleteUserController()))
 
 routes.post('/todos/:userId', adaptRoute(makeCreateTodoRepository()))
+routes.get('/todos/:userId', adaptRoute(makeListTodoController()))
 
 export { routes }
