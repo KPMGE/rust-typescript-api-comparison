@@ -1,13 +1,14 @@
 import { PrismaClient } from "@prisma/client";
 import { 
   CheckUserRepository,
-  CreateUserRepository 
+  CreateUserRepository, 
+  ListUserRepository
 } from "../../data/repositories";
 import { User } from "../../domain/entities";
 
 const prisma = new PrismaClient()
 
-export class UserRepository implements CreateUserRepository, CheckUserRepository {
+export class UserRepository implements CreateUserRepository, CheckUserRepository, ListUserRepository {
   async create(user: User): Promise<void> {
     await prisma.user.create({
       data: {
@@ -26,6 +27,10 @@ export class UserRepository implements CreateUserRepository, CheckUserRepository
     })
 
     return !!foundUser 
+  }
+
+  async list(): Promise<User[]> {
+    return prisma.user.findMany()
   }
 }
 
