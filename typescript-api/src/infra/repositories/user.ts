@@ -2,6 +2,7 @@ import { PrismaClient } from "@prisma/client";
 import { 
   CheckUserRepository,
   CreateUserRepository, 
+  DeleteUserRepository, 
   ListUserRepository,
   UpdateUserRepository
 } from "../../data/repositories";
@@ -13,7 +14,8 @@ export class UserRepository implements
   CreateUserRepository, 
   CheckUserRepository, 
   ListUserRepository,
-  UpdateUserRepository {
+  UpdateUserRepository,
+  DeleteUserRepository {
 
   async create(user: User): Promise<void> {
     await prisma.user.create({
@@ -47,6 +49,14 @@ export class UserRepository implements
       data: {
         name: newUser.name,
         email: newUser.email,
+      }
+    })
+  }
+
+  async delete(userId: number): Promise<void> {
+    await prisma.user.delete({
+      where: {
+        id: userId
       }
     })
   }

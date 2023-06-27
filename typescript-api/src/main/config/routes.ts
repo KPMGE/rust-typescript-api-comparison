@@ -3,6 +3,7 @@ import { Router } from "express";
 import { adaptRoute } from '../adapters';
 import { 
   makeCreateUserController, 
+  makeDeleteUserController, 
   makeListUserController, 
   makeUpdateUserController 
 } from '../factories';
@@ -16,5 +17,6 @@ routes.get('/health_check', (_req: Request, res: Response) => {
 routes.get('/users', adaptRoute(makeListUserController()))
 routes.post('/users', adaptRoute(makeCreateUserController()))
 routes.put('/users/:userId', adaptRoute(makeUpdateUserController()))
+routes.delete('/users/:userId', adaptRoute(makeDeleteUserController()))
 
 export { routes }
