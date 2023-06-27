@@ -2,13 +2,19 @@ import { PrismaClient } from "@prisma/client";
 import { 
   CheckUserRepository,
   CreateUserRepository, 
-  ListUserRepository
+  ListUserRepository,
+  UpdateUserRepository
 } from "../../data/repositories";
 import { User } from "../../domain/entities";
 
 const prisma = new PrismaClient()
 
-export class UserRepository implements CreateUserRepository, CheckUserRepository, ListUserRepository {
+export class UserRepository implements 
+  CreateUserRepository, 
+  CheckUserRepository, 
+  ListUserRepository,
+  UpdateUserRepository {
+
   async create(user: User): Promise<void> {
     await prisma.user.create({
       data: {
@@ -30,7 +36,19 @@ export class UserRepository implements CreateUserRepository, CheckUserRepository
   }
 
   async list(): Promise<User[]> {
-    return prisma.user.findMany()
+    return await prisma.user.findMany()
+  }
+
+  async update(userId: number, newUser: Omit<User, 'id'>): Promise<void> {
+    await prisma.user.update({
+      where: {
+        id: userId
+      },
+      data: {
+        name: newUser.name,
+        email: newUser.email,
+      }
+    })
   }
 }
 
