@@ -4,9 +4,11 @@ import { adaptRoute } from '../adapters';
 import { 
   makeCreateTodoRepository,
   makeCreateUserController, 
+  makeDeleteTodoController, 
   makeDeleteUserController, 
   makeListTodoController, 
   makeListUserController, 
+  makeUpdateTodoController, 
   makeUpdateUserController 
 } from '../factories';
 
@@ -23,5 +25,7 @@ routes.delete('/users/:userId', adaptRoute(makeDeleteUserController()))
 
 routes.post('/todos/:userId', adaptRoute(makeCreateTodoRepository()))
 routes.get('/todos/:userId', adaptRoute(makeListTodoController()))
+routes.put('/todos/:tagId', adaptRoute(makeUpdateTodoController()))
+routes.delete('/todos/:tagId', adaptRoute(makeDeleteTodoController()))
 
 export { routes }

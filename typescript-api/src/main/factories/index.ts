@@ -5,3 +5,5 @@ export * from './delete-user'
 
 export * from './create-todo'
 export * from './list-todo'
+export * from './update-todo'
+export * from './delete-todo'
