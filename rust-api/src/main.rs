@@ -1,13 +1,9 @@
-use actix_web::{get, App, HttpResponse, HttpServer, Responder};
-
-#[get("/health_check")]
-async fn health_check() -> impl Responder {
-    HttpResponse::Ok().finish()
-}
+mod routes;
+use actix_web::{App, HttpServer};
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
-    HttpServer::new(|| App::new().service(health_check))
+    HttpServer::new(|| App::new().service(routes::health_check))
         .bind(("127.0.01", 3333))?
         .run()
         .await
