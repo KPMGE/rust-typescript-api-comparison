@@ -2,6 +2,7 @@ import { Request, Response } from 'express'
 import { Router } from "express";
 import { adaptRoute } from '../adapters';
 import { 
+  makeCreateTodoRepository,
   makeCreateUserController, 
   makeDeleteUserController, 
   makeListUserController, 
@@ -14,9 +15,11 @@ routes.get('/health_check', (_req: Request, res: Response) => {
   res.send()
 })
 
-routes.get('/users', adaptRoute(makeListUserController()))
 routes.post('/users', adaptRoute(makeCreateUserController()))
+routes.get('/users', adaptRoute(makeListUserController()))
 routes.put('/users/:userId', adaptRoute(makeUpdateUserController()))
 routes.delete('/users/:userId', adaptRoute(makeDeleteUserController()))
+
+routes.post('/todos/:userId', adaptRoute(makeCreateTodoRepository()))
 
 export { routes }
