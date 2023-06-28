@@ -5,7 +5,7 @@ use dotenv::dotenv;
 use sqlx::postgres::PgPoolOptions;
 use std::env;
 
-use presentation::controllers::{create_user, delete_user, health_check, list_user, update_user};
+use presentation::controllers::{create_user, delete_user, health_check, list_user, update_user, create_todo};
 
 mod data;
 mod domain;
@@ -22,8 +22,10 @@ async fn main() -> std::io::Result<()> {
         .connect_lazy(db_url.as_str())
         .expect("could not connect to the database!");
 
-    let user_repo = infra::repositories::UserRepository::new(pool);
+    let user_repo = infra::repositories::UserRepository::new(pool.clone());
+    let todo_repo = infra::repositories::TodoRepository::new(pool);
     let repo_data = Data::new(user_repo);
+    let todo_data = Data::new(todo_repo);
 
     HttpServer::new(move || {
         App::new()
@@ -32,7 +34,9 @@ async fn main() -> std::io::Result<()> {
             .service(list_user)
             .service(update_user)
             .service(delete_user)
+            .service(create_todo)
             .app_data(repo_data.clone())
+            .app_data(todo_data.clone())
     })
     .bind(("127.0.0.1", 3333))?
     .run()
