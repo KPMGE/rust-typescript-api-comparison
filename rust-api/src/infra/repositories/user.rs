@@ -1,7 +1,8 @@
 use async_trait::async_trait;
 use sqlx::PgPool;
 
-use crate::data::repositories::CreateUserRepository;
+use crate::data::dto::UserDto;
+use crate::data::repositories::{CreateUserRepository, ListUserRepository};
 use crate::domain::entities::User;
 
 pub struct UserRepository {
@@ -34,5 +35,26 @@ impl CreateUserRepository for UserRepository {
         transaction.commit().await?;
 
         Ok(())
+    }
+}
+
+#[async_trait]
+impl ListUserRepository for UserRepository {
+    async fn list(&self) -> Result<Vec<UserDto>, sqlx::Error> {
+        let mut transaction = self.pool.begin().await?;
+
+        let users = sqlx::query_as!(
+            UserDto,
+            r#"
+                SELECT id, name, email 
+                FROM "User"
+            "#,
+        )
+        .fetch_all(&mut transaction)
+        .await?;
+
+        transaction.commit().await?;
+
+        Ok(users)
     }
 }

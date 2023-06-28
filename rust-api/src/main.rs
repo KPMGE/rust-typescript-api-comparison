@@ -8,7 +8,7 @@ mod domain;
 mod infra;
 mod presentation;
 
-use presentation::controllers::{create_user, health_check};
+use presentation::controllers::{create_user, health_check, list_user};
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
@@ -25,6 +25,7 @@ async fn main() -> std::io::Result<()> {
         App::new()
             .service(health_check)
             .service(create_user)
+            .service(list_user)
             .app_data(repo_data.clone())
     })
     .bind(("127.0.0.1", 3333))?

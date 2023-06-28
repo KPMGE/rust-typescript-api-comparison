@@ -1,4 +1,4 @@
-use crate::data::services::{create_user_service, CreateUserError::*};
+use crate::data::services::{create_user_service, CreateUserError::*, list_user_service};
 use crate::domain::entities::User;
 use crate::infra::repositories::UserRepository;
 use actix_web::web::{Data, Json};
@@ -21,4 +21,17 @@ pub async fn create_user(user: Json<User>, repo: Data<UserRepository>) -> impl R
     }
 
     HttpResponse::Ok().finish()
+}
+
+#[get("/users")]
+pub async fn list_user(repo: Data<UserRepository>) -> impl Responder {
+    let users = match list_user_service(repo.into_inner()).await {
+        Ok(users) => users,
+        Err(e) => {
+            eprintln!("ERROR: {:?}", e);
+            return HttpResponse::InternalServerError().finish()
+        }
+    };
+
+    HttpResponse::Ok().json(users)
 }
