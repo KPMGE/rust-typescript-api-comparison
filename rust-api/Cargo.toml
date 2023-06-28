@@ -6,6 +6,7 @@ edition = "2021"
 [dependencies]
 actix-web = "4"
 async-trait = "0.1.68"
+email_address = "0.2.4"
 serde = { version = "1", features = ["derive"] }
 
 [dependencies.sqlx]
