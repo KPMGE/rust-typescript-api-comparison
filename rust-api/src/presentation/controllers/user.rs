@@ -1,8 +1,10 @@
-use crate::data::services::{create_user_service, list_user_service, CreateUserError::*};
+use crate::data::services::{
+    create_user_service, list_user_service, update_user_service, CreateUserError::*, UpdateUserDto,
+};
 use crate::domain::entities::User;
 use crate::infra::repositories::UserRepository;
-use actix_web::web::{Data, Json};
-use actix_web::{get, post, HttpResponse, Responder};
+use actix_web::web::{Data, Json, Path};
+use actix_web::{get, post, put, HttpResponse, Responder};
 
 #[post("/users")]
 pub async fn create_user(user: Json<User>, repo: Data<UserRepository>) -> impl Responder {
@@ -29,4 +31,24 @@ pub async fn list_user(repo: Data<UserRepository>) -> impl Responder {
     };
 
     HttpResponse::Ok().json(users)
+}
+
+#[put("/users/{user_id}")]
+pub async fn update_user(
+    repo: Data<UserRepository>,
+    new_user: Json<UpdateUserDto>,
+    user_id: Path<i32>,
+) -> impl Responder {
+    if let Err(e) = update_user_service(
+        repo.into_inner(),
+        user_id.into_inner(),
+        new_user.into_inner(),
+    )
+    .await
+    {
+        eprintln!("ERROR: {:?}", e);
+        return HttpResponse::InternalServerError().finish();
+    }
+
+    HttpResponse::Ok().finish()
 }

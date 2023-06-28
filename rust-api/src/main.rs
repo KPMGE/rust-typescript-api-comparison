@@ -1,11 +1,11 @@
 use std::time::Duration;
 
 use actix_web::{web::Data, App, HttpServer};
-use sqlx::postgres::PgPoolOptions;
 use dotenv::dotenv;
+use sqlx::postgres::PgPoolOptions;
 use std::env;
 
-use presentation::controllers::{create_user, health_check, list_user};
+use presentation::controllers::{create_user, health_check, list_user, update_user};
 
 mod data;
 mod domain;
@@ -30,6 +30,7 @@ async fn main() -> std::io::Result<()> {
             .service(health_check)
             .service(create_user)
             .service(list_user)
+            .service(update_user)
             .app_data(repo_data.clone())
     })
     .bind(("127.0.0.1", 3333))?

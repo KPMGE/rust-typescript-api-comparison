@@ -2,7 +2,8 @@ use async_trait::async_trait;
 use sqlx::PgPool;
 
 use crate::data::dto::UserDto;
-use crate::data::repositories::{CreateUserRepository, ListUserRepository};
+use crate::data::repositories::{CreateUserRepository, ListUserRepository, UpdateUserRepository};
+use crate::data::services::UpdateUserDto;
 use crate::domain::entities::User;
 
 pub struct UserRepository {
@@ -56,5 +57,29 @@ impl ListUserRepository for UserRepository {
         transaction.commit().await?;
 
         Ok(users)
+    }
+}
+
+#[async_trait]
+impl UpdateUserRepository for UserRepository {
+    async fn update(&self, user_id: i32, user: UpdateUserDto) -> Result<(), sqlx::Error> {
+        let mut transaction = self.pool.begin().await?;
+
+        sqlx::query!(
+            r#"
+                UPDATE "User"
+                SET name = $1, email = $2
+                WHERE id = $3
+            "#,
+            user.name,
+            user.email,
+            user_id
+        )
+        .execute(&mut transaction)
+        .await?;
+
+        transaction.commit().await?;
+
+        Ok(())
     }
 }
