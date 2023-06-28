@@ -1166,6 +1166,7 @@ version = "0.1.0"
 dependencies = [
  "actix-web",
  "async-trait",
+ "dotenv",
  "email_address",
  "serde",
  "sqlx",
