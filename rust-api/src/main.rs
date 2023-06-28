@@ -2,20 +2,24 @@ use std::time::Duration;
 
 use actix_web::{web::Data, App, HttpServer};
 use sqlx::postgres::PgPoolOptions;
+use dotenv::dotenv;
+use std::env;
+
+use presentation::controllers::{create_user, health_check, list_user};
 
 mod data;
 mod domain;
 mod infra;
 mod presentation;
 
-use presentation::controllers::{create_user, health_check, list_user};
-
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
-    let db_url = "postgresql://postgres:root@localhost:5432/users?schema=public";
+    dotenv().ok();
+
+    let db_url = env::var("DATABASE_URL").expect("DATABASE_URL must be set!");
     let pool = PgPoolOptions::new()
         .connect_timeout(Duration::from_secs(20))
-        .connect_lazy(db_url)
+        .connect_lazy(db_url.as_str())
         .expect("could not connect to the database!");
 
     let user_repo = infra::repositories::UserRepository::new(pool);
