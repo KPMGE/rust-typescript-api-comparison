@@ -2,7 +2,9 @@ use async_trait::async_trait;
 use sqlx::PgPool;
 
 use crate::data::dto::UserDto;
-use crate::data::repositories::{CreateUserRepository, ListUserRepository, UpdateUserRepository};
+use crate::data::repositories::{
+    CreateUserRepository, DeleteUserRepository, ListUserRepository, UpdateUserRepository,
+};
 use crate::data::services::UpdateUserDto;
 use crate::domain::entities::User;
 
@@ -73,6 +75,27 @@ impl UpdateUserRepository for UserRepository {
             "#,
             user.name,
             user.email,
+            user_id
+        )
+        .execute(&mut transaction)
+        .await?;
+
+        transaction.commit().await?;
+
+        Ok(())
+    }
+}
+
+#[async_trait]
+impl DeleteUserRepository for UserRepository {
+    async fn delete(&self, user_id: i32) -> Result<(), sqlx::Error> {
+        let mut transaction = self.pool.begin().await?;
+
+        sqlx::query!(
+            r#"
+                DELETE FROM "User"
+                WHERE id = $1
+            "#,
             user_id
         )
         .execute(&mut transaction)

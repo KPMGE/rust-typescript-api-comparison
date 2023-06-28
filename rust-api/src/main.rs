@@ -5,7 +5,7 @@ use dotenv::dotenv;
 use sqlx::postgres::PgPoolOptions;
 use std::env;
 
-use presentation::controllers::{create_user, health_check, list_user, update_user};
+use presentation::controllers::{create_user, delete_user, health_check, list_user, update_user};
 
 mod data;
 mod domain;
@@ -31,6 +31,7 @@ async fn main() -> std::io::Result<()> {
             .service(create_user)
             .service(list_user)
             .service(update_user)
+            .service(delete_user)
             .app_data(repo_data.clone())
     })
     .bind(("127.0.0.1", 3333))?
