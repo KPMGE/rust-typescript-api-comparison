@@ -5,8 +5,8 @@ use std::sync::Arc;
 
 #[derive(Debug, Deserialize)]
 pub struct UpdateUserDto {
-    pub name: String, 
-    pub email: String
+    pub name: String,
+    pub email: String,
 }
 
 pub async fn update_user_service(

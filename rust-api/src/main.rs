@@ -5,7 +5,9 @@ use dotenv::dotenv;
 use sqlx::postgres::PgPoolOptions;
 use std::env;
 
-use presentation::controllers::{create_user, delete_user, health_check, list_user, update_user, create_todo};
+use presentation::controllers::{
+    create_todo, create_user, delete_user, health_check, list_user, update_user, list_todo,
+};
 
 mod data;
 mod domain;
@@ -35,6 +37,7 @@ async fn main() -> std::io::Result<()> {
             .service(update_user)
             .service(delete_user)
             .service(create_todo)
+            .service(list_todo)
             .app_data(repo_data.clone())
             .app_data(todo_data.clone())
     })

@@ -1,5 +1,5 @@
-mod user;
 mod todo;
+mod user;
 
-pub use user::*;
 pub use todo::*;
+pub use user::*;

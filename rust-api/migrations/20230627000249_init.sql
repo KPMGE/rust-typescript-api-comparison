@@ -12,7 +12,7 @@ CREATE TABLE "User" (
 CREATE TABLE "Todo" (
     "id" SERIAL NOT NULL,
     "title" TEXT NOT NULL,
-    "description" TEXT,
+    "description" TEXT NOT NULL,
     "completed" BOOLEAN NOT NULL DEFAULT false,
     "userId" INTEGER NOT NULL,
 

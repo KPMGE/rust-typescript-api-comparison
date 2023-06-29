@@ -1,10 +1,16 @@
-use sqlx::PgPool;
 use async_trait::async_trait;
+use sqlx::PgPool;
 
-use crate::{data::repositories::CreateTodoRepository, domain::entities::Todo};
+use crate::{
+    data::{
+        repositories::{CreateTodoRepository, ListTodoRepository},
+        services::TodoDto,
+    },
+    domain::entities::Todo,
+};
 
 pub struct TodoRepository {
-    pool: PgPool 
+    pool: PgPool,
 }
 
 impl TodoRepository {
@@ -19,7 +25,7 @@ impl CreateTodoRepository for TodoRepository {
         let mut transaction = self.pool.begin().await?;
         let completed = match todo.completed {
             Some(val) => val,
-            None => false
+            None => false,
         };
 
         sqlx::query!(
@@ -38,5 +44,28 @@ impl CreateTodoRepository for TodoRepository {
         transaction.commit().await?;
 
         Ok(())
+    }
+}
+
+#[async_trait]
+impl ListTodoRepository for TodoRepository {
+    async fn list(&self, user_id: i32) -> Result<Vec<TodoDto>, sqlx::Error> {
+        let mut transaction = self.pool.begin().await?;
+
+        let todos = sqlx::query_as!(
+            TodoDto,
+            r#"
+                SELECT id, title, description, completed
+                FROM "Todo"
+                WHERE "userId" = $1
+            "#,
+            user_id
+        )
+        .fetch_all(&mut transaction)
+        .await?;
+
+        transaction.commit().await?;
+
+        Ok(todos)
     }
 }
