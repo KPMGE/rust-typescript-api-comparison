@@ -1,13 +1,13 @@
-use std::sync::Arc;
-use serde::Serialize;
 use crate::data::repositories::ListTodoRepository;
+use serde::Serialize;
+use std::sync::Arc;
 
 #[derive(Debug, Serialize)]
 pub struct TodoDto {
     pub id: i32,
     pub title: String,
     pub description: String,
-    pub completed: bool
+    pub completed: bool,
 }
 
 pub async fn list_todo_service(

@@ -6,8 +6,8 @@ use sqlx::postgres::PgPoolOptions;
 use std::env;
 
 use presentation::controllers::{
-    create_todo, create_user, delete_user, health_check, list_todo, list_user, update_todo,
-    update_user,
+    create_todo, create_user, delete_todo, delete_user, health_check, list_todo, list_user,
+    update_todo, update_user,
 };
 
 mod data;
@@ -40,6 +40,7 @@ async fn main() -> std::io::Result<()> {
             .service(create_todo)
             .service(list_todo)
             .service(update_todo)
+            .service(delete_todo)
             .app_data(repo_data.clone())
             .app_data(todo_data.clone())
     })

@@ -3,7 +3,10 @@ use sqlx::PgPool;
 
 use crate::{
     data::{
-        repositories::{CreateTodoRepository, ListTodoRepository, UpdateTodoRepository, UpdateTodoDto},
+        repositories::{
+            CreateTodoRepository, DeleteTodoRepository, ListTodoRepository, UpdateTodoDto,
+            UpdateTodoRepository,
+        },
         services::TodoDto,
     },
     domain::entities::Todo,
@@ -88,6 +91,26 @@ impl UpdateTodoRepository for TodoRepository {
         .execute(&mut transaction)
         .await?;
 
+        transaction.commit().await?;
+
+        Ok(())
+    }
+}
+
+#[async_trait]
+impl DeleteTodoRepository for TodoRepository {
+    async fn delete(&self, todo_id: i32) -> Result<(), sqlx::Error> {
+        let mut transaction = self.pool.begin().await?;
+
+        sqlx::query!(
+            r#"
+                DELETE FROM "Todo"
+                WHERE id = $1
+            "#,
+            todo_id
+        )
+        .execute(&mut transaction)
+        .await?;
 
         transaction.commit().await?;
 

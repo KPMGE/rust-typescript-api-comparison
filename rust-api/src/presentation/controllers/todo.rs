@@ -1,5 +1,5 @@
 use actix_web::{
-    get, post, put,
+    delete, get, post, put,
     web::{Data, Json, Path},
     HttpResponse, Responder,
 };
@@ -7,7 +7,9 @@ use actix_web::{
 use crate::{
     data::{
         repositories::UpdateTodoDto,
-        services::{create_todo_service, list_todo_service, update_todo_service},
+        services::{
+            create_todo_service, delete_todo_service, list_todo_service, update_todo_service,
+        },
     },
     domain::entities::Todo,
     infra::repositories::TodoRepository,
@@ -44,14 +46,25 @@ pub async fn list_todo(repo: Data<TodoRepository>, user_id: Path<i32>) -> impl R
 pub async fn update_todo(
     repo: Data<TodoRepository>,
     new_todo: Json<UpdateTodoDto>,
-    user_id: Path<i32>,
+    todo_id: Path<i32>,
 ) -> impl Responder {
     if let Err(e) = update_todo_service(
         repo.into_inner(),
         new_todo.into_inner(),
-        user_id.into_inner(),
+        todo_id.into_inner(),
     )
-    .await {
+    .await
+    {
+        eprintln!("ERROR: {:?}", e);
+        return HttpResponse::InternalServerError().finish();
+    }
+
+    HttpResponse::Ok().finish()
+}
+
+#[delete("/todos/{todo_id}")]
+pub async fn delete_todo(repo: Data<TodoRepository>, todo_id: Path<i32>) -> impl Responder {
+    if let Err(e) = delete_todo_service(repo.into_inner(), todo_id.into_inner()).await {
         eprintln!("ERROR: {:?}", e);
         return HttpResponse::InternalServerError().finish();
     }
