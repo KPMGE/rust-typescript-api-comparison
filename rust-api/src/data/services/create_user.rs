@@ -43,7 +43,7 @@ pub async fn create_user_service(
         }));
     }
 
-    repo.create(parsed_user).await.map_err(|e| {
+    repo.create(&parsed_user).await.map_err(|e| {
         eprintln!("ERROR: {:?}", e);
 
         RepoError({

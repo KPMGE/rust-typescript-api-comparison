@@ -43,7 +43,7 @@ pub async fn update_user(
     if let Err(e) = update_user_service(
         repo.into_inner(),
         user_id.into_inner(),
-        new_user.into_inner(),
+        &new_user,
     )
     .await
     {

@@ -24,7 +24,7 @@ impl TodoRepository {
 
 #[async_trait]
 impl CreateTodoRepository for TodoRepository {
-    async fn create(&self, todo: Todo, user_id: i32) -> Result<(), sqlx::Error> {
+    async fn create(&self, todo: &Todo, user_id: i32) -> Result<(), sqlx::Error> {
         let mut transaction = self.pool.begin().await?;
         let completed = match todo.completed {
             Some(val) => val,
@@ -75,7 +75,7 @@ impl ListTodoRepository for TodoRepository {
 
 #[async_trait]
 impl UpdateTodoRepository for TodoRepository {
-    async fn update(&self, new_todo: UpdateTodoDto, todo_id: i32) -> Result<(), sqlx::Error> {
+    async fn update(&self, new_todo: &UpdateTodoDto, todo_id: i32) -> Result<(), sqlx::Error> {
         let mut transaction = self.pool.begin().await?;
 
         sqlx::query!(

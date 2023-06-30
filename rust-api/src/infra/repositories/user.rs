@@ -20,7 +20,7 @@ impl UserRepository {
 
 #[async_trait]
 impl CreateUserRepository for UserRepository {
-    async fn create(&self, user: User) -> Result<(), sqlx::Error> {
+    async fn create(&self, user: &User) -> Result<(), sqlx::Error> {
         let mut transaction = self.pool.begin().await?;
 
         sqlx::query!(
@@ -64,7 +64,7 @@ impl ListUserRepository for UserRepository {
 
 #[async_trait]
 impl UpdateUserRepository for UserRepository {
-    async fn update(&self, user_id: i32, user: UpdateUserDto) -> Result<(), sqlx::Error> {
+    async fn update(&self, user_id: i32, user: &UpdateUserDto) -> Result<(), sqlx::Error> {
         let mut transaction = self.pool.begin().await?;
 
         sqlx::query!(

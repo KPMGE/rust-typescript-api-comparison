@@ -22,7 +22,7 @@ pub async fn create_todo(
     user_id: Path<i32>,
 ) -> impl Responder {
     if let Err(e) =
-        create_todo_service(repo.into_inner(), todo.into_inner(), user_id.into_inner()).await
+        create_todo_service(repo.into_inner(), &todo, user_id.into_inner()).await
     {
         eprintln!("ERROR: {:?}", e);
         return HttpResponse::InternalServerError().finish();
@@ -50,7 +50,7 @@ pub async fn update_todo(
 ) -> impl Responder {
     if let Err(e) = update_todo_service(
         repo.into_inner(),
-        new_todo.into_inner(),
+        &new_todo,
         todo_id.into_inner(),
     )
     .await
