@@ -1,0 +1,170 @@
+# RUST 
+results: [
+  0.38
+  0.35
+  0.22
+  0.21
+  0.21
+  0.22
+  0.22
+  0.33
+  0.31
+  0.25
+]
+average: 0.2756177328003105
+amount users: 5
+amount todos for user: 5
+
+#TYPESCRIPT
+results: [
+  0.77
+  0.33
+  0.36
+  0.36
+  0.36
+  0.37
+  0.55
+  0.32
+  0.45
+  0.31
+]
+average: 0.42260173199974815
+amount users: 5
+amount todos for user: 5
+
+# RUST
+results: [
+  1.76
+  1.80
+  2.21
+  1.84
+  2.22
+  1.97
+  1.98
+  2.01
+  2.17
+  1.86
+]
+average: 1.9861611384010758
+amount users: 10
+amount todos for user: 20
+
+# TYPESCRIPT
+results: [
+  3.01
+  2.71
+  2.72
+  2.86
+  3.15
+  2.41
+  2.48
+  2.33
+  2.28
+  2.68
+]
+average: 2.666992688098253
+amount users: 10
+amount todos for user: 20
+
+# RUST
+results: [
+  8.96
+  8.50
+  8.46
+  9.00
+  9.52
+  8.94
+  8.59
+  7.95
+  9.08
+  8.88
+]
+average: 8.79212524950126
+amount users: 30
+amount todos for user: 30
+
+# TYPESCRIPT
+results: [
+  12.78
+  11.33
+  12.02
+  11.36
+  11.02
+  11.16
+  12.04
+  10.95
+  10.95
+  11.30
+]
+average: 11.49668624699989
+amount users: 30
+amount todos for user: 30
+
+# RUST
+results: [
+  26.35
+  23.39
+  23.96
+  24.65
+  24.39
+  24.73
+  25.27
+  24.49
+  24.66
+  24.31
+]
+average: 24.62481255829771
+amount users: 50
+amount todos for user: 50
+
+#TYPESCRIPT
+results: [
+  38.80
+  33.52
+  33.85
+  30.17
+  30.80
+  31.51
+  31.70
+  28.31
+  32.83
+  32.50
+]
+average: 32.40425515680035
+amount users: 50
+amount todos for user: 50
+
+
+# RUST
+results: [
+67.36757413200394
+67.39447089200257
+65.98816614699899
+66.77860481599782
+66.74082876500324
+67.22020360200258
+64.37324100799742
+66.44836722300533
+62.088459350998164
+64.16248624400032
+]
+average: 65.85624021800103
+amount users: 80
+amount todos for user: 80
+
+# TYPESCRIPT
+results: [
+91.70449978900433
+85.18001273499976
+84.29924794800172
+86.66594466599781
+82.30744696899637
+84.11336101000052
+81.84685999799694
+85.78261412999564
+86.18241855099768
+87.28488388099504
+]
+average: 85.53672896769858
+amount users: 80
+amount todos for user: 80
