@@ -1,6 +1,5 @@
 use async_trait::async_trait;
-
-use crate::data::services::TodoDto;
+use crate::data::dto::TodoDto;
 
 #[async_trait]
 pub trait ListTodoRepository {
