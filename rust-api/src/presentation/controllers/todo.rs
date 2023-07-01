@@ -6,7 +6,7 @@ use actix_web::{
 
 use crate::{
     data::{
-        repositories::UpdateTodoDto,
+        dto::UpdateTodoDto,
         services::{
             create_todo_service, delete_todo_service, list_todo_service, update_todo_service,
         },

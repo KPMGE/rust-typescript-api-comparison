@@ -1,6 +1,8 @@
 use std::sync::Arc;
-
-use crate::data::repositories::{UpdateTodoDto, UpdateTodoRepository};
+use crate::data::{
+    repositories::UpdateTodoRepository,
+    dto::UpdateTodoDto
+};
 
 pub async fn update_todo_service(
     repo: Arc<impl UpdateTodoRepository>,

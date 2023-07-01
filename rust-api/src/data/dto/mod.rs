@@ -1,8 +1,5 @@
-use serde::Serialize;
+mod user_dto;
+mod update_todo;
 
-#[derive(Debug, Serialize)]
-pub struct UserDto {
-    pub id: i32,
-    pub name: String,
-    pub email: String,
-}
+pub use user_dto::*;
+pub use update_todo::*;

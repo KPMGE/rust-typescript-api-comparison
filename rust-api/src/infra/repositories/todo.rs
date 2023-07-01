@@ -3,8 +3,9 @@ use sqlx::PgPool;
 
 use crate::{
     data::{
+        dto::UpdateTodoDto,
         repositories::{
-            CreateTodoRepository, DeleteTodoRepository, ListTodoRepository, UpdateTodoDto,
+            CreateTodoRepository, DeleteTodoRepository, ListTodoRepository,
             UpdateTodoRepository,
         },
         services::TodoDto,

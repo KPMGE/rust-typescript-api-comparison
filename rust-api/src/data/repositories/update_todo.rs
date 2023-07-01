@@ -1,11 +1,5 @@
 use async_trait::async_trait;
-use serde::Deserialize;
-
-#[derive(Debug, Deserialize)]
-pub struct UpdateTodoDto {
-    pub title: String,
-    pub description: String,
-}
+use crate::data::dto::UpdateTodoDto;
 
 #[async_trait]
 pub trait UpdateTodoRepository {
