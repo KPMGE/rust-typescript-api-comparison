@@ -1,11 +1,12 @@
 use crate::data::services::{
     create_user_service, delete_user_service, list_user_service, update_user_service,
-    CreateUserError::*, UpdateUserDto,
+    UpdateUserDto,
 };
 use crate::domain::entities::User;
 use crate::infra::repositories::UserRepository;
 use actix_web::web::{Data, Json, Path};
 use actix_web::{delete, get, post, put, HttpResponse, Responder};
+use crate::domain::errors::CreateUserError::*;
 
 #[post("/users")]
 pub async fn create_user(user: Json<User>, repo: Data<UserRepository>) -> impl Responder {

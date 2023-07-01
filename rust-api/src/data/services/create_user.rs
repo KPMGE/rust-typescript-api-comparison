@@ -1,24 +1,10 @@
 use crate::{
     data::repositories::CreateUserRepository,
     domain::entities::{ParseUserError, User},
+    domain::errors::{CreateUserError, ErrorMessage},
 };
 use email_address::EmailAddress;
-use serde::Serialize;
 use std::sync::Arc;
-
-#[derive(Debug, Serialize)]
-pub struct ErrorMessage {
-    message: String,
-}
-
-#[derive(Debug)]
-pub enum CreateUserError {
-    InvalidUserError(ErrorMessage),
-    InvalidEmailError(ErrorMessage),
-    RepoError(ErrorMessage),
-}
-
-use CreateUserError::*;
 
 pub async fn create_user_service(
     user: &User,
@@ -29,16 +15,16 @@ pub async fn create_user_service(
             eprintln!("ERROR: {:?}", e);
             match e {
                 ParseUserError::InvalidPasswordLength(str) => {
-                    InvalidUserError(ErrorMessage { message: str })
+                    CreateUserError::InvalidUserError(ErrorMessage { message: str })
                 }
                 ParseUserError::InvalidUserNameLength(str) => {
-                    InvalidUserError(ErrorMessage { message: str })
+                    CreateUserError::InvalidUserError(ErrorMessage { message: str })
                 }
             }
         })?;
 
     if !EmailAddress::is_valid(user.email.as_str()) {
-        return Err(InvalidEmailError(ErrorMessage {
+        return Err(CreateUserError::InvalidEmailError(ErrorMessage {
             message: "invalid email address".to_string(),
         }));
     }
@@ -46,7 +32,7 @@ pub async fn create_user_service(
     repo.create(&parsed_user).await.map_err(|e| {
         eprintln!("ERROR: {:?}", e);
 
-        RepoError({
+        CreateUserError::RepoError({
             ErrorMessage {
                 message: "internal server error".to_string(),
             }
