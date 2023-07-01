@@ -1,12 +1,13 @@
 use async_trait::async_trait;
 use sqlx::PgPool;
 
-use crate::data::dto::UserDto;
-use crate::data::repositories::{
-    CreateUserRepository, DeleteUserRepository, ListUserRepository, UpdateUserRepository,
-};
-use crate::data::services::UpdateUserDto;
 use crate::domain::entities::User;
+use crate::data::{ 
+    repositories::{
+        CreateUserRepository, DeleteUserRepository, ListUserRepository, UpdateUserRepository,
+    },
+    dto::{UpdateUserDto, UserDto},
+};
 
 pub struct UserRepository {
     pool: PgPool,

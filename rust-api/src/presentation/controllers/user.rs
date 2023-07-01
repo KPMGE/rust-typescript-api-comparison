@@ -1,6 +1,8 @@
-use crate::data::services::{
-    create_user_service, delete_user_service, list_user_service, update_user_service,
-    UpdateUserDto,
+use crate::data::{
+    services::{
+        create_user_service, delete_user_service, list_user_service, update_user_service,
+    },
+    dto::UpdateUserDto
 };
 use crate::domain::entities::User;
 use crate::infra::repositories::UserRepository;

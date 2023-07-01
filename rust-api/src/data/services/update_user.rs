@@ -1,13 +1,8 @@
-use serde::Deserialize;
-
-use crate::data::repositories::UpdateUserRepository;
+use crate::data::{ 
+    repositories::UpdateUserRepository,
+    dto::UpdateUserDto
+};
 use std::sync::Arc;
-
-#[derive(Debug, Deserialize)]
-pub struct UpdateUserDto {
-    pub name: String,
-    pub email: String,
-}
 
 pub async fn update_user_service(
     repo: Arc<impl UpdateUserRepository>,

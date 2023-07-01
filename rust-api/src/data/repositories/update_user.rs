@@ -1,4 +1,4 @@
-use crate::data::services::UpdateUserDto;
+use crate::data::dto::UpdateUserDto;
 use async_trait::async_trait;
 
 #[async_trait]
